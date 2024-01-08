@@ -9,8 +9,8 @@ export const AuthContext = createContext({});
 
 function AuthProvider({ children }){
   const [user, setUser] = useState(null);
-  const [ loadingAuth, setLoadingAuth ] = useState(false);
-  const [ loading, setLoading ] = useState(true);
+  const [loadingAuth, setLoadingAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const navigation = useNavigation();
 
@@ -96,9 +96,16 @@ function AuthProvider({ children }){
       setLoadingAuth(false)
     }
   }
+
+  async function signOut(){
+    await AsyncStorage.clear()
+    .then(() => {
+      setUser(null);
+    })
+  }
   
   return(
-    <AuthContext.Provider value={{ signed: !!user, user, signUp, signIn, loadingAuth, loading }}>
+    <AuthContext.Provider value={{ signed: !!user, user, signUp, signIn, signOut, loadingAuth, loading }}>
       {children}
     </AuthContext.Provider>
   )

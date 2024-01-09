@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import { AuthContext } from '../../contexts/auth';
 
@@ -9,12 +9,15 @@ import { useIsFocused } from '@react-navigation/native'
 
 import Header from '../../components/Header';
 import BalanceItem from '../../components/BalanceItem';
+import HistoricoList from '../../components/HistoricoList';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Background, ListBalance } from './styles';
+import { Background, ListBalance, Area, Text, List } from './styles';
 
 export default function Home(){
   const isFocused = useIsFocused();
   const [listBalance, setListBalance] = useState([]);
+  const [movements, setMovements] = useState([]);
   const [dateMovements, setDateMovements] = useState(new Date());
 
   useEffect(() => {
@@ -23,6 +26,12 @@ export default function Home(){
     async function getMovements(){
       let dateFormated = format(dateMovements, 'dd/MM/yyyy');
 
+      const receives = await api.get('/receives', {
+        params:{
+          date: dateFormated
+        }
+      })
+
       const balance = await api.get('/balance', {
         params:{
           date: dateFormated
@@ -30,6 +39,7 @@ export default function Home(){
       })
 
       if(isActive){
+        setMovements(receives.data)
         setListBalance(balance.data);
       }
     }
@@ -51,6 +61,25 @@ export default function Home(){
         keyExtractor={ item => item.tag }
         renderItem={ ({ item }) => ( <BalanceItem data={item} /> )}
       />
+
+      <Area>
+        <TouchableOpacity>
+          <Icon name="event" size={30} color='#121212'/>
+        </TouchableOpacity>
+
+        <Text>
+          Ultimas movimentações
+        </Text>
+      </Area>
+
+      <List
+        data={movements}
+        keyExtractor={ item => item.id }
+        renderItem={ ({ item }) => <HistoricoList data={item} /> }
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      />
+
     </Background>
   );
 }

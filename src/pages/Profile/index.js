@@ -22,7 +22,7 @@ export default function Profile(){
     <Header title='Meu perfil'/>
 
     <Message>
-      Olá, seja bem vindo novamente!
+      Olá, seja bem vindo novamente.
     </Message>
 
     <Name numberOfLines={1}>

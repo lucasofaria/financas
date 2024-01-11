@@ -21,9 +21,11 @@ export default function Profile(){
    <Container>
     <Header title='Meu perfil'/>
 
-    <Message>Hey, seja bem vindo novamente!</Message>
+    <Message>
+      Olá, seja bem vindo novamente!
+    </Message>
 
-    <Name numberOfLines={1}> 
+    <Name numberOfLines={1}>
       {user && user.name}
     </Name>
 

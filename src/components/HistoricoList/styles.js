@@ -11,6 +11,7 @@ export const Container = styled.View`
 
 export const Tipo = styled.View`
   flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const IconView = styled.View`
@@ -33,5 +34,17 @@ export const TipoText = styled.Text`
 
 export const ValorText = styled.Text`
   color: #121212;
-  font-size: 22px;
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+export const ItemView = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const DescriptionText = styled.Text`
+  color: #121212;
+  font-size: 20px;
 `;
